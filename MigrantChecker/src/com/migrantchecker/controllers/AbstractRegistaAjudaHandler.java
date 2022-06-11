@@ -1,51 +1,32 @@
 package com.migrantchecker.controllers;
 
-import java.util.List;
 import java.util.Random;
 
-import com.migrantchecker.dominio.Ajuda;
 import com.migrantchecker.dominio.Regiao;
 import com.migrantchecker.dominio.Voluntario;
-import com.migrantchecker.dominio.catRegioes;
 import com.pidgeonsmssender.sdk.PidgeonSMSSender;
 
-public class RegistaAjudaHandler {
+public abstract class AbstractRegistaAjudaHandler {
 	
-	private Voluntario v;
+	protected Voluntario v;
 	private Regiao r;
-	private Ajuda a;
-	private String code;
+	protected String code;
 	
-	public void iniciarAplicacao(String numTel) {
+	public AbstractRegistaAjudaHandler(String numTel) {
 		this.v = new Voluntario(numTel);
 	}
 
-	public void indicarTipoAjuda(String ajudaEscolhida) {
-		this.a = new Ajuda(ajudaEscolhida);
-		
-	}
-
-	public List<Regiao> indicarNumPessoas(int numPessoas) {
-		a.setNumPessoas(numPessoas);
-		return catRegioes.getListaRegioes();
-	}
+//	public void indicarTipoAjuda(String ajudaEscolhida) {
+//		if(ajudaEscolhida.equalsIgnoreCase("alojamento")) {
+//			this.a = new AjudaAloj("Oferta de alojamento");
+//		} else if(ajudaEscolhida.equalsIgnoreCase("item")) {
+//			this.a = new AjudaItem("Oferta de item");
+//		}
+//	}
 
 	public String indicaRegiao(Regiao regiao) { //faz sentido devolver uma string?
 		//r = catRegioes.getRegiao(regiao); esta opção não faz sentido 
 		r = regiao;
-		PidgeonSMSSender sender = new PidgeonSMSSender();
-		Random rd = new Random();
-		int i = 0;
-		while(i < 5) {
-			code.concat(Integer.toString(rd.nextInt(9) + 1));
-			i++;
-		}
-		sender.send(v.numTel, "Este e o seu codigo unico de confirmacao de ajuda: " + code);
-		return null;
-	}
-
-	public String indicaDescItem(String descItem) { //faz sentido devolver uma string?
-		a.setDescItem(descItem);
 		PidgeonSMSSender sender = new PidgeonSMSSender();
 		Random rd = new Random();
 		int i = 0;
