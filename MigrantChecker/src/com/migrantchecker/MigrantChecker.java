@@ -22,5 +22,4 @@ public class MigrantChecker {
 	public ProcuraAjudaFamiliarHandler getProcuraAjudaFamiliarHandler(String tipoRegisto) {
 		return new ProcuraAjudaFamiliarHandler(tipoRegisto);
 	}
-
 }

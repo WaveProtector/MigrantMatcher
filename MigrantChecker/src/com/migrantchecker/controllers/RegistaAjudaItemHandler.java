@@ -1,9 +1,10 @@
 package com.migrantchecker.controllers;
 
-import java.util.Random;
+import java.util.List;
 
 import com.migrantchecker.dominio.AjudaItem;
-import com.pidgeonsmssender.sdk.PidgeonSMSSender;
+import com.migrantchecker.dominio.Regiao;
+import com.migrantchecker.dominio.catRegioes;
 
 public class RegistaAjudaItemHandler extends AbstractRegistaAjudaHandler {
 
@@ -13,16 +14,9 @@ public class RegistaAjudaItemHandler extends AbstractRegistaAjudaHandler {
 		super(numTel);
 	}
 	
-	public String indicaDescItem(String descItem) { //faz sentido devolver uma string?
+	public List<Regiao> indicaDescItem(String descItem) {
 		a.setDescItem(descItem);
-		PidgeonSMSSender sender = new PidgeonSMSSender();
-		Random rd = new Random();
-		int i = 0;
-		while(i < 5) {
-			code.concat(Integer.toString(rd.nextInt(9) + 1));
-			i++;
-		}
-		sender.send(v.numTel, "Este e o seu codigo unico de confirmacao de ajuda: " + code);
-		return null;
+		return catRegioes.getInstance().getListaRegioes();
 	}
+	
 }

@@ -9,5 +9,4 @@ public class ProcuraAjudaIndividualHandler extends AbstractProcuraAjudaHandler {
 	public ProcuraAjudaIndividualHandler(String tipoEscolhido) {
 		r = new RegistoIndividual(tipoEscolhido);
 	}
-	
 }

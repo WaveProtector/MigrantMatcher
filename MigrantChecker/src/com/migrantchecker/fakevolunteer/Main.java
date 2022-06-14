@@ -1,36 +1,40 @@
 package com.migrantchecker.fakevolunteer;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import com.migrantchecker.MigrantChecker;
 import com.migrantchecker.controllers.RegistaAjudaAlojHandler;
 import com.migrantchecker.controllers.RegistaAjudaItemHandler;
+import com.migrantchecker.dominio.AjudaAloj;
+import com.migrantchecker.dominio.AjudaItem;
 import com.migrantchecker.dominio.Regiao;
+import com.migrantchecker.dominio.Voluntario;
 
 public class Main {
-	/*Código que simula a interação de um voluntário*/
+	/*Código que simula a interação de um voluntário */
 	public static void main(String[] args) {
-		String numTel = "919191919";
+		Voluntario v = new Voluntario("919191919");
 		String tipoAjuda[] = {"Aloj", "Item"};
 		Random rd = new Random();
-		List<Regiao> disponiveis;
+		List<Regiao> disponiveis = new ArrayList<>();
 		String codigoSMS;
-		
 		
 		String ajudaEscolhida = tipoAjuda[rd.nextInt(2)];
 		if(ajudaEscolhida.equals(tipoAjuda[0])) {
-			RegistaAjudaAlojHandler handler = new MigrantChecker().getRegistaAjudaAlojHandler(numTel);
+			AjudaAloj a = new AjudaAloj(tipoAjuda[0], v);
+			RegistaAjudaAlojHandler handler = new MigrantChecker().getRegistaAjudaAlojHandler(v.numTel);
 			disponiveis = handler.indicarNumPessoas(rd.nextInt(10));
-			codigoSMS = handler.indicaRegiao(disponiveis.get(rd.nextInt(disponiveis.size())));
+			codigoSMS = handler.associaAjudaRegiao(disponiveis.get(rd.nextInt(disponiveis.size())), a);
 			handler.indicarCodigo(codigoSMS);
 		} else {
-			RegistaAjudaItemHandler handler = new MigrantChecker().getRegistaAjudaItemHandler(numTel);
+			AjudaItem a = new AjudaItem(tipoAjuda[1], v);
+			RegistaAjudaItemHandler handler = new MigrantChecker().getRegistaAjudaItemHandler(v.numTel);
 			String descItem = "descricao";
-			codigoSMS = handler.indicaDescItem(descItem);
+			disponiveis = handler.indicaDescItem(descItem);
+			codigoSMS = handler.associaAjudaRegiao(disponiveis.get(rd.nextInt(disponiveis.size())), a);
 			handler.indicarCodigo(codigoSMS);
 		}
-		
 	}
-
 }

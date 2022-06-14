@@ -7,5 +7,4 @@ public class Voluntario {
 	public Voluntario(String numTel) {
 		this.numTel = numTel;
 	}
-
 }

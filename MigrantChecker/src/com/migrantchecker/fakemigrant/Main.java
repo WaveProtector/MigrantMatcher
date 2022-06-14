@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Random;
 
 import com.migrantchecker.MigrantChecker;
-import com.migrantchecker.controllers.AbstractProcuraAjudaHandler;
 import com.migrantchecker.controllers.ProcuraAjudaFamiliarHandler;
 import com.migrantchecker.controllers.ProcuraAjudaIndividualHandler;
 import com.migrantchecker.dominio.Ajuda;
@@ -57,7 +56,5 @@ public class Main {
 			}
 			handler.confirmarAjuda();
 		}
-
 	}
-
 }

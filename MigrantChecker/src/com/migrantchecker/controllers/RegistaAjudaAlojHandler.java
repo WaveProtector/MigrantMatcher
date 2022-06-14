@@ -16,7 +16,7 @@ public class RegistaAjudaAlojHandler extends AbstractRegistaAjudaHandler {
 	
 	public List<Regiao> indicarNumPessoas(int numPessoas) {
 		a.setNumPessoas(numPessoas);
-		return catRegioes.getListaRegioes();
+		return catRegioes.getInstance().getListaRegioes();
 	}
 
 }

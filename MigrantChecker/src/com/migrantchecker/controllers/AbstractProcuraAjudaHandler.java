@@ -5,9 +5,9 @@ import java.util.List;
 import com.migrantchecker.dominio.Ajuda;
 import com.migrantchecker.dominio.Migrante;
 import com.migrantchecker.dominio.Regiao;
-import com.migrantchecker.dominio.Registo;
 import com.migrantchecker.dominio.catRegioes;
 import com.pidgeonsmssender.sdk.PidgeonSMSSender;
+import com.telegramsms.TelegramSMSSender;
 
 public abstract class AbstractProcuraAjudaHandler {
 
@@ -19,15 +19,20 @@ public abstract class AbstractProcuraAjudaHandler {
 	}
 
 	public List<Regiao> pedirListaRegioes() {
-		return catRegioes.getListaRegioes();
+		return catRegioes.getInstance().getListaRegioes();
 	}
 
 	public List<Ajuda> indicarRegiao(Regiao regiaoEscolhida) {
-		List<Ajuda> la = catRegioes.getRegiao(regiaoEscolhida).getListaAjudas();
+		List<Ajuda> la = catRegioes.getInstance().getRegiao(regiaoEscolhida).getListaAjudas();
 		if(la.isEmpty()) {
-			PidgeonSMSSender sender = new PidgeonSMSSender();
-			sender.send(m.numTel, "Nao existe nenhuma ajuda na regiao indicada. Pretende ser notificado"
+			PidgeonSMSSender sender1 = new PidgeonSMSSender();
+			TelegramSMSSender sender2 = new TelegramSMSSender();
+			sender2.setNumber(m.numTel);
+			sender2.setText("Nao existe nenhuma ajuda na regiao indicada. Pretende ser notificado"
 					+ " quando existir ajuda nesta regiao?");
+			sender1.send(m.numTel, "Nao existe nenhuma ajuda na regiao indicada. Pretende ser notificado"
+					+ " quando existir ajuda nesta regiao?");
+			sender2.send();
 		}
 		return la;
 	}
@@ -38,9 +43,14 @@ public abstract class AbstractProcuraAjudaHandler {
 
 	public void confirmarAjuda() {
 		m.registaAjudasEscolhidas(laEscolhidas);
-		//TODO enviar sms aos voluntários que ofereceram as respetivas ajudas
-		//Talvez para fazer isso temos de acessar um catálogo de voluntários
-		
+		PidgeonSMSSender sender1 = new PidgeonSMSSender();
+		TelegramSMSSender sender2 = new TelegramSMSSender();
+		String message = "A sua ajuda foi escolhida!";
+		sender2.setText(message);
+		for(Ajuda a : laEscolhidas) {
+			sender2.setNumber(a.v.numTel);
+			sender1.send(a.v.numTel, message);
+			sender2.send();
+		}
 	}
-
 }

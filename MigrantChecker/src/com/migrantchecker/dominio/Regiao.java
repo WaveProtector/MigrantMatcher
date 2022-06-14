@@ -1,14 +1,16 @@
 package com.migrantchecker.dominio;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Regiao {
 	
-	private static String designacao;
+	private String designacao;
 	private List<Ajuda> la;
 	
 	public Regiao(String designacao) {
-		Regiao.designacao = designacao; //talvez dê erro aqui?
+		this.designacao = designacao;
+		this.la = new ArrayList<>();
 	}
 	
 	public String getDesignacao() {
@@ -18,5 +20,8 @@ public class Regiao {
 	public List<Ajuda> getListaAjudas() {
 		return la;
 	}
-
+	
+	public void addAjuda(Ajuda a) {
+		la.add(a);
+	}
 }
