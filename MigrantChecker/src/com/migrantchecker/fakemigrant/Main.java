@@ -6,7 +6,6 @@ import java.util.Random;
 import com.migrantchecker.MigrantChecker;
 import com.migrantchecker.controllers.ProcuraAjudaFamiliarHandler;
 import com.migrantchecker.controllers.ProcuraAjudaIndividualHandler;
-import com.migrantchecker.dominio.Ajuda;
 import com.migrantchecker.dominio.Regiao;
 
 public class Main {
@@ -18,10 +17,10 @@ public class Main {
 		String nome = "Alfonse";
 		String numTel = "191919191";
 		List<Regiao> regioes;
-		List<Ajuda> ajudasDaRegiao;
+		List<String> ajudasDaRegiao;
 		
 		if(tipoEscolhido.equals(tipoRegisto[0])) {
-			ProcuraAjudaIndividualHandler handler = new MigrantChecker().getProcuraAjudaIndividualHandler(tipoEscolhido);
+			ProcuraAjudaIndividualHandler handler = new MigrantChecker().getProcuraAjudaIndividualHandler();
 			handler.indicarInfo(nome, numTel);
 			regioes = handler.pedirListaRegioes();
 			Regiao regiaoEscolhida = regioes.get(rd.nextInt(regioes.size()) + 1);
@@ -29,13 +28,13 @@ public class Main {
 			int numAjudasEscolhidas = rd.nextInt(5) + 1;
 			int i = 0;
 			while(i < numAjudasEscolhidas) {
-				Ajuda ajudaEscolhida = ajudasDaRegiao.get(rd.nextInt(ajudasDaRegiao.size() + 1));
+				String ajudaEscolhida = ajudasDaRegiao.get(rd.nextInt(ajudasDaRegiao.size() + 1));
 				handler.escolherAjuda(ajudaEscolhida);
 				i++;
 			}
 			handler.confirmarAjuda();
 		} else {
-			ProcuraAjudaFamiliarHandler handler = new MigrantChecker().getProcuraAjudaFamiliarHandler(tipoEscolhido);
+			ProcuraAjudaFamiliarHandler handler = new MigrantChecker().getProcuraAjudaFamiliarHandler();
 			int familiares = rd.nextInt(10) + 1;
 			handler.indicarNumPessoasFamiliar(familiares);
 			handler.indicarInfo(nome, numTel);
@@ -50,7 +49,7 @@ public class Main {
 			int numAjudasEscolhidas = rd.nextInt(5) + 1;
 			i = 0;
 			while(i < numAjudasEscolhidas) {
-				Ajuda ajudaEscolhida = ajudasDaRegiao.get(rd.nextInt(ajudasDaRegiao.size() + 1));
+				String ajudaEscolhida = ajudasDaRegiao.get(rd.nextInt(ajudasDaRegiao.size() + 1));
 				handler.escolherAjuda(ajudaEscolhida);
 				i++;
 			}

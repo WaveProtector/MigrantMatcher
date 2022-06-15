@@ -2,11 +2,19 @@ package com.migrantchecker.dominio;
 
 public abstract class Ajuda {
 	
-	public String designacao;
-	public Voluntario v;
+	protected String designacao;
+	protected Voluntario v;
 	
-	public Ajuda(String designacao, Voluntario v) {
-		this.designacao = designacao;
+	public Ajuda(Voluntario v) {
+		this.designacao = AjudaID.getINSTANCE().getAjudaID();
 		this.v = v;
+	}
+	
+	public String getNumTel() {
+		return v.getNumTel();
+	}
+	
+	public String getDesignacao() {
+		return this.designacao;
 	}
 }

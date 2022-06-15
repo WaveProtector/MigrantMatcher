@@ -17,8 +17,16 @@ public class Regiao {
 		return designacao;
 	}
 
+	public List<String> getListaAjudasDes() {
+		List<String> ajudas = new ArrayList<>();
+		for(int i = 0; i < this.la.size(); i++) {
+			ajudas.add(this.la.get(i).getDesignacao());
+		}
+		return ajudas;
+	}
+	
 	public List<Ajuda> getListaAjudas() {
-		return la;
+		return this.la;
 	}
 	
 	public void addAjuda(Ajuda a) {

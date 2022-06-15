@@ -4,8 +4,8 @@ public class AjudaAloj extends Ajuda {
 	
 	private int numPessoas;
 	
-	public AjudaAloj(String designacao, Voluntario v) {
-		super(designacao, v);
+	public AjudaAloj(Voluntario v) {
+		super(v);
 	}
 	
 	public void setNumPessoas(int numPessoas) {

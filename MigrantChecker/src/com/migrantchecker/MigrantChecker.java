@@ -7,19 +7,19 @@ import com.migrantchecker.controllers.RegistaAjudaItemHandler;
 
 public class MigrantChecker {
 	
-	public RegistaAjudaAlojHandler getRegistaAjudaAlojHandler(String numTel) {
-		return new RegistaAjudaAlojHandler(numTel);
+	public RegistaAjudaAlojHandler getRegistaAjudaAlojHandler() {
+		return new RegistaAjudaAlojHandler();
 	}
 	
-	public RegistaAjudaItemHandler getRegistaAjudaItemHandler(String numTel) {
-		return new RegistaAjudaItemHandler(numTel);
+	public RegistaAjudaItemHandler getRegistaAjudaItemHandler() {
+		return new RegistaAjudaItemHandler();
 	}
 	
-	public ProcuraAjudaIndividualHandler getProcuraAjudaIndividualHandler(String tipoRegisto) {
-		return new ProcuraAjudaIndividualHandler(tipoRegisto);
+	public ProcuraAjudaIndividualHandler getProcuraAjudaIndividualHandler() {
+		return new ProcuraAjudaIndividualHandler();
 	}
 	
-	public ProcuraAjudaFamiliarHandler getProcuraAjudaFamiliarHandler(String tipoRegisto) {
-		return new ProcuraAjudaFamiliarHandler(tipoRegisto);
+	public ProcuraAjudaFamiliarHandler getProcuraAjudaFamiliarHandler() {
+		return new ProcuraAjudaFamiliarHandler();
 	}
 }

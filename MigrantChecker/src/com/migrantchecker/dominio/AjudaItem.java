@@ -5,7 +5,7 @@ public class AjudaItem extends Ajuda {
 	private String descItem;
 	
 	public AjudaItem(String designacao, Voluntario v) {
-		super(designacao, v);
+		super(v);
 	}
 	
 	public void setDescItem(String descItem) {
