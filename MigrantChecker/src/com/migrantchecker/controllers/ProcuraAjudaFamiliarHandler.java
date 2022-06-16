@@ -15,8 +15,17 @@ import com.migrantchecker.dominio.CatRegioes;
 import com.pidgeonsmssender.sdk.PidgeonSMSSender;
 import com.telegramsms.TelegramSMSSender;
 
+/**
+ * Classe que implementa o Procura Ajuda Handler, para o caso do migrante fazer um registo familiar.
+ * 
+ * @author Ricardo Mateus, fc56366
+ *
+ */
 public class ProcuraAjudaFamiliarHandler extends AbstractProcuraAjudaHandler {
 
+	/**
+	 * Representa o registo familiar associado ao migrante/cabeça de casal.
+	 */
 	private RegistoFamiliar r;
 	
 	@Override
@@ -25,6 +34,12 @@ public class ProcuraAjudaFamiliarHandler extends AbstractProcuraAjudaHandler {
 		this.r = new RegistoFamiliar("Registo familiar", m);
 	}
 	
+	/**
+	 * Este método recebe o número de familiares que o migrante quer registar no seu registo familiar.
+	 * 
+	 * @param familiares, o número de familiares no registo familiar.
+	 * @throws NumFamiliaresIgualMenorZeroException caso o número de familiares seja menor ou igual a zero.
+	 */
 	public void indicarNumPessoasFamiliar(int familiares) throws NumFamiliaresIgualMenorZeroException {
 		if(familiares <= 0) {
 			throw new NumFamiliaresIgualMenorZeroException();
@@ -33,6 +48,11 @@ public class ProcuraAjudaFamiliarHandler extends AbstractProcuraAjudaHandler {
 		}
 	}
 	
+	/**
+	 * Este método recebe o nome de um familiar do migrante/cabeça de casal e associa-o ao registo familiar. 
+	 * 
+	 * @param nome, o nome de um familiar do migrante/cabeça de casal.
+	 */
 	public void indicarFamiliar(String nome) {
 		this.r.addFamiliar(nome);
 	}

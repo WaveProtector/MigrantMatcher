@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import com.migrantchecker.MigrantChecker;
+import com.migrantchecker.MigrantMatcher;
 import com.migrantchecker.controllers.ProcuraAjudaFamiliarHandler;
 import com.migrantchecker.controllers.ProcuraAjudaIndividualHandler;
 import com.migrantchecker.dominio.Regiao;
@@ -13,8 +13,14 @@ import com.migrantchecker.exceptions.FamiliaMaiorQueAlojException;
 import com.migrantchecker.exceptions.NumFamiliaresIgualMenorZeroException;
 import com.migrantchecker.exceptions.RegiaoNotInCatRegioesException;
 
+/**
+ * Classe que simula a interação de um migrante no sistema Migrant Matcher.
+ * 
+ * @author Ricardo Mateus, fc56366
+ *
+ */
 public class Main {
-	/*Código que simula a interação de um migrante*/
+	
 	public static void main(String[] args) throws FamiliaMaiorQueAlojException, AjudaNaoExisteException, 
 	NumFamiliaresIgualMenorZeroException, RegiaoNotInCatRegioesException {
 		String tipoRegisto[] = {"Individual", "Familiar"};
@@ -26,7 +32,7 @@ public class Main {
 		List<String> ajudasDaRegiao = new ArrayList<>();
 		
 		if(tipoEscolhido.equals(tipoRegisto[0])) {
-			ProcuraAjudaIndividualHandler handler = new MigrantChecker().getProcuraAjudaIndividualHandler();
+			ProcuraAjudaIndividualHandler handler = new MigrantMatcher().getProcuraAjudaIndividualHandler();
 			handler.indicarInfo(nome, numTel);
 			regioes = handler.pedirListaRegioes();
 			Regiao regiaoEscolhida = regioes.get(rd.nextInt(regioes.size()));
@@ -42,7 +48,7 @@ public class Main {
 				handler.confirmarAjuda();
 			}
 		} else {
-			ProcuraAjudaFamiliarHandler handler = new MigrantChecker().getProcuraAjudaFamiliarHandler();
+			ProcuraAjudaFamiliarHandler handler = new MigrantMatcher().getProcuraAjudaFamiliarHandler();
 			int familiares = rd.nextInt(10) + 1;
 			handler.indicarInfo(nome, numTel);
 			handler.indicarNumPessoasFamiliar(familiares);

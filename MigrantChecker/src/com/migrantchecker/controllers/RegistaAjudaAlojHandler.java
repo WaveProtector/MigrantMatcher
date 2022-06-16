@@ -11,10 +11,28 @@ import com.migrantchecker.dominio.CatRegioes;
 import com.pidgeonsmssender.sdk.PidgeonSMSSender;
 import com.telegramsms.TelegramSMSSender;
 
+/**
+ * Classe que implementa o Regista Ajuda Handler, para o caso do voluntário oferecer alojamento.
+ * 
+ * @author Ricardo Mateus, fc56366
+ *
+ */
 public class RegistaAjudaAlojHandler extends AbstractRegistaAjudaHandler {
 
+	/**
+	 * Representa a ajuda de alojamento oferecida pelo voluntário.
+	 */
 	private AjudaAloj a;
 	
+	/**
+	 * Este método recebe o número de pessoas que conseguem viver no alojamento e devolve uma lista de
+	 * regiões predefinidas no catálogo de regiões(catRegioes).
+	 * 
+	 * @param numPessoas, número de pessoas que conseguem viver no alojamento/capacidade do alojamento.
+	 * @return uma lista de regiões predefinidas no catálogo de regiões(catRegioes).
+	 * @throws NumPessoasAlojIgualMenorZeroException se o número de pessoas fornecido pelo voluntário for
+	 * inferior ou igual a zero.
+	 */
 	public List<Regiao> indicarNumPessoas(int numPessoas) throws NumPessoasAlojIgualMenorZeroException {
 		this.a = new AjudaAloj(this.v);
 		if(numPessoas <= 0) {

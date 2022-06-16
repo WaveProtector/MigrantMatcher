@@ -10,12 +10,28 @@ import com.migrantchecker.dominio.CatRegioes;
 import com.pidgeonsmssender.sdk.PidgeonSMSSender;
 import com.telegramsms.TelegramSMSSender;
 
+/**
+ * Classe que implementa o Regista Ajuda Handler, para o caso do voluntário oferecer um item.
+ * 
+ * @author Ricardo Mateus, fc56366
+ *
+ */
 public class RegistaAjudaItemHandler extends AbstractRegistaAjudaHandler {
 
+	/**
+	 * Representa a ajuda do item oferecido pelo voluntário.
+	 */
 	private AjudaItem a;
 	
+	/**
+	 * Este método recebe a descrição do item, associa-a à ajuda oferecida pelo voluntário e devolve
+	 * uma lista de regiões predefinidas no catálogo de regiões(catRegioes).
+	 * 
+	 * @param descItem, a descrição do item a ser oferecido pelo voluntário.
+	 * @return uma lista de regiões predefinidas no catálogo de regiões(catRegioes).
+	 */
 	public List<Regiao> indicaDescItem(String descItem) {
-		this.a = new AjudaItem("Ajuda de item", this.v);
+		this.a = new AjudaItem(this.v);
 		a.setDescItem(descItem);
 		return CatRegioes.getInstance().getListaRegioes();
 	}

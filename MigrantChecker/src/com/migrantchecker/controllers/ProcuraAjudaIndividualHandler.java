@@ -13,8 +13,17 @@ import com.migrantchecker.dominio.CatRegioes;
 import com.pidgeonsmssender.sdk.PidgeonSMSSender;
 import com.telegramsms.TelegramSMSSender;
 
+/**
+ * Classe que implementa o Procura Ajuda Handler, para o caso do migrante fazer um registo individual.
+ * 
+ * @author Ricardo Mateus, fc56366
+ *
+ */
 public class ProcuraAjudaIndividualHandler extends AbstractProcuraAjudaHandler {
 
+	/**
+	 * Representa o registo individual associado ao migrante.
+	 */
 	private RegistoIndividual r;
 
 	@Override
@@ -73,6 +82,5 @@ public class ProcuraAjudaIndividualHandler extends AbstractProcuraAjudaHandler {
 			sender1.send(a.getNumTel(), message);
 			sender2.send();
 		}
-		
 	}
 }
