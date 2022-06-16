@@ -68,13 +68,14 @@ public class ProcuraAjudaFamiliarHandler extends AbstractProcuraAjudaHandler {
 		}
 		if(!foundAjuda) {
 			throw new AjudaNaoExisteException();
+		} else if(a instanceof AjudaAloj) {
+				AjudaAloj temp = (AjudaAloj) a;
+				if(temp.getNumPessoas() > 0 && temp.getNumPessoas() < r.numFamiliares() + 1) {
+					throw new FamiliaMaiorQueAlojException();
+				} else
+					laEscolhidas.add(a);
 		} else {
-			AjudaAloj temp = (AjudaAloj) a;
-			if(temp.getNumPessoas() > 0 && temp.getNumPessoas() < r.numFamiliares() + 1) {
-				throw new FamiliaMaiorQueAlojException();
-			} else {
-				laEscolhidas.add(a);
-			}
+			laEscolhidas.add(a);
 		}
 		
 	}
@@ -82,6 +83,10 @@ public class ProcuraAjudaFamiliarHandler extends AbstractProcuraAjudaHandler {
 	@Override
 	public void confirmarAjuda() {
 		r.registaAjudasEscolhidas(laEscolhidas);
+		r.registaAjudasEscolhidas(laEscolhidas);
+		for(int i = 0; i < laEscolhidas.size(); i++) {
+			CatRegioes.getInstance().removeAjudaRegiao(laEscolhidas.get(i));
+		}
 		PidgeonSMSSender sender1 = new PidgeonSMSSender();
 		TelegramSMSSender sender2 = new TelegramSMSSender();
 		String message = "A sua ajuda foi escolhida!";

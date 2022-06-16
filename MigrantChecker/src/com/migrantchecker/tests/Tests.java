@@ -89,11 +89,11 @@ class Tests {
 			int numAjudasEscolhidas2 = 2;
 			int i2 = 0;
 			while(i2 < numAjudasEscolhidas2 && i2 < ajudasDaRegiao2.size()) {
-				String ajudaEscolhida2 = ajudasDaRegiao2.get(0);
+				String ajudaEscolhida2 = ajudasDaRegiao2.get(i2);
 				handlerM2.escolherAjuda(ajudaEscolhida2);
-				handlerM2.confirmarAjuda();
 				i2++;
 			}
+			handlerM2.confirmarAjuda();
 		}
 	}
 
