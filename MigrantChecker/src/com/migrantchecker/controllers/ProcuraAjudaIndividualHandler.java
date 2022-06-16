@@ -6,7 +6,10 @@ import com.migrantchecker.dominio.Ajuda;
 import com.migrantchecker.dominio.Migrante;
 import com.migrantchecker.dominio.Regiao;
 import com.migrantchecker.dominio.RegistoIndividual;
-import com.migrantchecker.dominio.catRegioes;
+import com.migrantchecker.exceptions.AjudaNaoExisteException;
+import com.migrantchecker.exceptions.FamiliaMaiorQueAlojException;
+import com.migrantchecker.exceptions.RegiaoNotInCatRegioesException;
+import com.migrantchecker.dominio.CatRegioes;
 import com.pidgeonsmssender.sdk.PidgeonSMSSender;
 import com.telegramsms.TelegramSMSSender;
 
@@ -21,9 +24,9 @@ public class ProcuraAjudaIndividualHandler extends AbstractProcuraAjudaHandler {
 	}
 
 	@Override
-	public List<String> indicarRegiao(Regiao regiaoEscolhida) {
-		this.laRegiaoEscolhida = catRegioes.getInstance().getRegiao(regiaoEscolhida).getListaAjudas();
-		List<String> la = catRegioes.getInstance().getRegiao(regiaoEscolhida).getListaAjudasDes();
+	public List<String> indicarRegiao(Regiao regiaoEscolhida) throws RegiaoNotInCatRegioesException {
+		this.laRegiaoEscolhida = CatRegioes.getInstance().getRegiao(regiaoEscolhida).getListaAjudas();
+		List<String> la = CatRegioes.getInstance().getRegiao(regiaoEscolhida).getListaAjudasDes();
 		if(la.isEmpty()) {
 			String numTel = r.getNumTel();
 			PidgeonSMSSender sender1 = new PidgeonSMSSender();
@@ -39,8 +42,28 @@ public class ProcuraAjudaIndividualHandler extends AbstractProcuraAjudaHandler {
 	}
 
 	@Override
+	public void escolherAjuda(String ajudaEscolhida) throws FamiliaMaiorQueAlojException, 
+	AjudaNaoExisteException {
+		Ajuda a = null;
+		boolean foundAjuda = false;
+		for(int i = 0; i < laRegiaoEscolhida.size() && !foundAjuda; i++) {
+			if(laRegiaoEscolhida.get(i).getDesignacao().equals(ajudaEscolhida)) {
+				a = laRegiaoEscolhida.get(i);
+				foundAjuda = true;
+			}
+		}
+		if(!foundAjuda) {
+			throw new AjudaNaoExisteException();
+		}
+		laEscolhidas.add(a);
+	}
+	
+	@Override
 	public void confirmarAjuda() {
 		r.registaAjudasEscolhidas(laEscolhidas);
+		for(int i = 0; i < laEscolhidas.size(); i++) {
+			CatRegioes.getInstance().removeAjudaRegiao(laEscolhidas.get(i));
+		}
 		PidgeonSMSSender sender1 = new PidgeonSMSSender();
 		TelegramSMSSender sender2 = new TelegramSMSSender();
 		String message = "A sua ajuda foi escolhida!";

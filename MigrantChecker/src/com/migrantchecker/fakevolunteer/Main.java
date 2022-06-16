@@ -8,10 +8,12 @@ import com.migrantchecker.MigrantChecker;
 import com.migrantchecker.controllers.RegistaAjudaAlojHandler;
 import com.migrantchecker.controllers.RegistaAjudaItemHandler;
 import com.migrantchecker.dominio.Regiao;
+import com.migrantchecker.exceptions.NumPessoasAlojIgualMenorZeroException;
+import com.migrantchecker.exceptions.RegiaoNotInCatRegioesException;
 
 public class Main {
 	/*Código que simula a interação de um voluntário */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws NumPessoasAlojIgualMenorZeroException, RegiaoNotInCatRegioesException {
 		String numTel = "919191919";
 		String tipoAjuda[] = {"Aloj", "Item"};
 		Random rd = new Random();
@@ -27,6 +29,7 @@ public class Main {
 			handler.indicarCodigo(codigoSMS);
 		} else {
 			RegistaAjudaItemHandler handler = new MigrantChecker().getRegistaAjudaItemHandler();
+			handler.iniciarAplicacao(numTel);
 			String descItem = "descricao";
 			disponiveis = handler.indicaDescItem(descItem);
 			codigoSMS = handler.associaAjudaRegiao(disponiveis.get(rd.nextInt(disponiveis.size())));

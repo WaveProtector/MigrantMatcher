@@ -3,10 +3,15 @@ package com.migrantchecker.controllers;
 import java.util.List;
 
 import com.migrantchecker.dominio.Ajuda;
+import com.migrantchecker.dominio.AjudaAloj;
 import com.migrantchecker.dominio.Migrante;
 import com.migrantchecker.dominio.Regiao;
 import com.migrantchecker.dominio.RegistoFamiliar;
-import com.migrantchecker.dominio.catRegioes;
+import com.migrantchecker.exceptions.AjudaNaoExisteException;
+import com.migrantchecker.exceptions.FamiliaMaiorQueAlojException;
+import com.migrantchecker.exceptions.NumFamiliaresIgualMenorZeroException;
+import com.migrantchecker.exceptions.RegiaoNotInCatRegioesException;
+import com.migrantchecker.dominio.CatRegioes;
 import com.pidgeonsmssender.sdk.PidgeonSMSSender;
 import com.telegramsms.TelegramSMSSender;
 
@@ -20,18 +25,22 @@ public class ProcuraAjudaFamiliarHandler extends AbstractProcuraAjudaHandler {
 		this.r = new RegistoFamiliar("Registo familiar", m);
 	}
 	
-	public void indicarNumPessoasFamiliar(int familiares) {
-		r.setNumPessoasFamilia(familiares);
+	public void indicarNumPessoasFamiliar(int familiares) throws NumFamiliaresIgualMenorZeroException {
+		if(familiares <= 0) {
+			throw new NumFamiliaresIgualMenorZeroException();
+		} else {
+			this.r.setNumPessoasFamilia(familiares);
+		}
 	}
 	
 	public void indicarFamiliar(String nome) {
-		r.addFamiliar(nome);
+		this.r.addFamiliar(nome);
 	}
 
 	@Override
-	public List<String> indicarRegiao(Regiao regiaoEscolhida) {
-		this.laRegiaoEscolhida = catRegioes.getInstance().getRegiao(regiaoEscolhida).getListaAjudas();
-		List<String> la = catRegioes.getInstance().getRegiao(regiaoEscolhida).getListaAjudasDes();
+	public List<String> indicarRegiao(Regiao regiaoEscolhida) throws RegiaoNotInCatRegioesException {
+		this.laRegiaoEscolhida = CatRegioes.getInstance().getRegiao(regiaoEscolhida).getListaAjudas();
+		List<String> la = CatRegioes.getInstance().getRegiao(regiaoEscolhida).getListaAjudasDes();
 		if(la.isEmpty()) {
 			String numTel = r.getNumTel();
 			PidgeonSMSSender sender1 = new PidgeonSMSSender();
@@ -44,6 +53,30 @@ public class ProcuraAjudaFamiliarHandler extends AbstractProcuraAjudaHandler {
 			sender2.send();
 		}
 		return la;
+	}
+
+	@Override
+	public void escolherAjuda(String ajudaEscolhida) throws FamiliaMaiorQueAlojException, 
+	AjudaNaoExisteException {
+		Ajuda a = null;
+		boolean foundAjuda = false;
+		for(int i = 0; i < laRegiaoEscolhida.size() && !foundAjuda; i++) {
+			if(laRegiaoEscolhida.get(i).getDesignacao().equals(ajudaEscolhida)) {
+				a = laRegiaoEscolhida.get(i);
+				foundAjuda = true;
+			}
+		}
+		if(!foundAjuda) {
+			throw new AjudaNaoExisteException();
+		} else {
+			AjudaAloj temp = (AjudaAloj) a;
+			if(temp.getNumPessoas() > 0 && temp.getNumPessoas() < r.numFamiliares() + 1) {
+				throw new FamiliaMaiorQueAlojException();
+			} else {
+				laEscolhidas.add(a);
+			}
+		}
+		
 	}
 
 	@Override

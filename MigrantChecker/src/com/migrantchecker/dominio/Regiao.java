@@ -32,4 +32,24 @@ public class Regiao {
 	public void addAjuda(Ajuda a) {
 		la.add(a);
 	}
+	
+	public void removeAjuda(String designacao) {
+		boolean foundAjuda = false;
+		for(int i = 0; i < la.size() && !foundAjuda; i++) {
+			if(la.get(i).designacao.equals(designacao)) {
+				la.remove(i);
+				foundAjuda = true;
+			}
+		}
+	}
+	
+	public boolean temAjuda(String designacao) {
+		boolean temAjuda = false;
+		for(int i = 0; i < la.size() && !temAjuda; i++) {
+			if(la.get(i).designacao.equals(designacao)) {
+				temAjuda = true;
+			}
+		}
+		return temAjuda;
+	}
 }

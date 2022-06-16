@@ -21,4 +21,8 @@ public class RegistoFamiliar extends Registo {
 			}
 		}
 	}
+	
+	public int numFamiliares() {
+		return familia.length;
+	}
 }

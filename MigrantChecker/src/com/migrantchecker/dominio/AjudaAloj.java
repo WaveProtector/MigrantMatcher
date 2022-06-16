@@ -11,4 +11,8 @@ public class AjudaAloj extends Ajuda {
 	public void setNumPessoas(int numPessoas) {
 		this.numPessoas = numPessoas;
 	}
+	
+	public int getNumPessoas() {
+		return this.numPessoas;
+	}
 }

@@ -6,10 +6,7 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/ricar/Desktop/Faculdade/2ºanoLEI/2º Semestre/DCO/2ª fase/MigrantChecker/MigrantChecker/src/smsproviders.jar">
-		<attributes>
-			<attribute name="module" value="true"/>
-		</attributes>
-	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
+	<classpathentry kind="lib" path="C:/Users/ricar/Desktop/Faculdade/2ºanoLEI/2º Semestre/DCO/2ª fase/MigrantChecker/MigrantChecker/src/smsproviders.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

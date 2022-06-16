@@ -1,35 +1,30 @@
 package com.migrantchecker.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.migrantchecker.dominio.Ajuda;
 import com.migrantchecker.dominio.Regiao;
-import com.migrantchecker.dominio.catRegioes;
+import com.migrantchecker.exceptions.AjudaNaoExisteException;
+import com.migrantchecker.exceptions.FamiliaMaiorQueAlojException;
+import com.migrantchecker.exceptions.RegiaoNotInCatRegioesException;
+import com.migrantchecker.dominio.CatRegioes;
 
 public abstract class AbstractProcuraAjudaHandler {
 
-	protected List<Ajuda> laEscolhidas;
-	protected List<Ajuda> laRegiaoEscolhida;
+	protected List<Ajuda> laEscolhidas = new ArrayList<>();
+	protected List<Ajuda> laRegiaoEscolhida = new ArrayList<>();
 
 	public abstract void indicarInfo(String nome, String numTel);
 
 	public List<Regiao> pedirListaRegioes() {
-		return catRegioes.getInstance().getListaRegioes();
+		return CatRegioes.getInstance().getListaRegioes();
 	}
 
-	public abstract List<String> indicarRegiao(Regiao regiaoEscolhida);
+	public abstract List<String> indicarRegiao(Regiao regiaoEscolhida) throws RegiaoNotInCatRegioesException;
 
-	public void escolherAjuda(String ajudaEscolhida) {
-		Ajuda a = null;
-		boolean foundAjuda = false;
-		for(int i = 0; i < 0 && !foundAjuda; i++) {
-			if(laRegiaoEscolhida.get(i).getDesignacao().equals(ajudaEscolhida)) {
-				a = laRegiaoEscolhida.get(i);
-				foundAjuda = true;
-			}
-		}
-		laEscolhidas.add(a);
-	}
+	public abstract void escolherAjuda(String ajudaEscolhida) throws FamiliaMaiorQueAlojException, 
+	AjudaNaoExisteException;
 
 	public abstract void confirmarAjuda();
 }
